@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Afrasiab Asghar — Digital Solutions Expert</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060810;
+    --bg2: #0c0f1a;
+    --bg3: #111425;
+    --accent: #4f8cff;
+    --accent2: #a259ff;
+    --accent3: #00e5c8;
+    --text: #e8eaf2;
+    --text-muted: #6b7292;
+    --text-dim: #9ca3c0;
+    --border: rgba(255,255,255,0.07);
+    --card: rgba(255,255,255,0.03);
+    --glow: 0 0 40px rgba(79,140,255,0.15);
+    --radius: 16px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  /* ── ANNOUNCEMENT TICKER ── */
+  #ticker-bar {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    padding: 8px 0;
+    overflow: hidden;
+    position: relative;
+    display: none;
+  }
+  #ticker-bar.active { display: block; }
+  .ticker-inner {
+    display: flex; animation: ticker 25s linear infinite;
+    white-space: nowrap;
+  }
+  .ticker-inner span { padding: 0 40px; font-size: 13px; font-weight: 500; letter-spacing: 0.05em; }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(20px);
+    background: rgba(6,8,16,0.8);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  nav.scrolled { padding: 14px 40px; }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--text-dim); text-decoration: none; font-size: 14px; font-weight: 500;
+    transition: color 0.2s; letter-spacing: 0.02em;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    display: flex; gap: 12px; align-items: center;
+  }
+  .btn-call {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(79,140,255,0.1); border: 1px solid rgba(79,140,255,0.3);
+    color: var(--accent); padding: 8px 16px; border-radius: 8px;
+    font-size: 13px; font-weight: 500; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-call:hover { background: rgba(79,140,255,0.2); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+    padding: 120px 40px 80px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 40%, rgba(79,140,255,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 60%, rgba(162,89,255,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 50% 20%, rgba(0,229,200,0.04) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 900px; margin: 0 auto; text-align: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    padding: 6px 16px; border-radius: 100px; font-size: 13px; color: var(--text-dim);
+    margin-bottom: 28px;
+    animation: fadeDown 0.6s ease both;
+  }
+  .hero-badge .dot { width: 6px; height: 6px; background: var(--accent3); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 8vw, 100px);
+    font-weight: 800;
+    line-height: 1; letter-spacing: -3px;
+    margin-bottom: 16px;
+    animation: fadeDown 0.6s 0.1s ease both;
+  }
+  .hero-name .line1 { display: block; color: var(--text); }
+  .hero-name .line2 {
+    display: block;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero-title {
+    font-size: clamp(16px, 2.5vw, 22px); color: var(--text-dim); font-weight: 300;
+    margin-bottom: 12px; letter-spacing: 0.02em;
+    animation: fadeDown 0.6s 0.2s ease both;
+  }
+  .hero-tagline {
+    font-size: clamp(13px, 1.5vw, 16px); color: var(--text-muted); max-width: 520px; margin: 0 auto 40px;
+    animation: fadeDown 0.6s 0.3s ease both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    animation: fadeDown 0.6s 0.4s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; padding: 14px 32px; border-radius: 10px;
+    font-size: 15px; font-weight: 600; text-decoration: none;
+    transition: all 0.2s; box-shadow: 0 8px 30px rgba(79,140,255,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(79,140,255,0.4); }
+  .btn-secondary {
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text); padding: 14px 32px; border-radius: 10px;
+    font-size: 15px; font-weight: 500; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: var(--card); border-color: rgba(255,255,255,0.15); }
+  .btn-whatsapp {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.3);
+    color: #25d366; padding: 14px 28px; border-radius: 10px;
+    font-size: 15px; font-weight: 500; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-whatsapp:hover { background: rgba(37,211,102,0.2); }
+
+  /* ── COUNTDOWN ── */
+  #countdown-section {
+    background: linear-gradient(135deg, rgba(79,140,255,0.08), rgba(162,89,255,0.08));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px; text-align: center;
+    max-width: 700px; margin: 40px auto 0;
+    animation: fadeDown 0.6s 0.5s ease both;
+    display: none;
+  }
+  #countdown-section.active { display: block; }
+  .countdown-label { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+  .countdown-offer { font-size: 18px; color: var(--text); margin-bottom: 20px; font-weight: 500; }
+  .countdown-timer { display: flex; gap: 16px; justify-content: center; }
+  .time-unit { text-align: center; }
+  .time-val {
+    font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: block;
+  }
+  .time-lbl { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 40px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--accent); margin-bottom: 16px; font-weight: 600;
+  }
+  .section-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800; letter-spacing: -2px; line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .section-desc { font-size: 17px; color: var(--text-dim); max-width: 600px; line-height: 1.7; }
+
+  /* ── ABOUT ── */
+  #about { background: var(--bg2); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .about-image-wrap {
+    position: relative;
+  }
+  .about-image-wrap::before {
+    content: '';
+    position: absolute; inset: -2px; border-radius: 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+    z-index: 0; opacity: 0.5;
+  }
+  .about-image-wrap img, .about-image-placeholder {
+    position: relative; z-index: 1;
+    width: 100%; border-radius: 18px; display: block;
+    object-fit: cover; aspect-ratio: 4/5;
+    background: var(--bg3);
+  }
+  .about-image-placeholder {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px; color: var(--text-muted);
+  }
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px; margin-top: 40px;
+  }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px;
+  }
+  .stat-val {
+    font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+  /* ── SERVICES ── */
+  #services { background: var(--bg); }
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 60px; }
+  .service-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px;
+    transition: all 0.3s; cursor: default;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .service-card:hover { background: rgba(255,255,255,0.05); transform: translateY(-4px); box-shadow: var(--glow); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-size: 36px; margin-bottom: 16px; }
+  .service-name { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .service-desc { font-size: 14px; color: var(--text-dim); line-height: 1.7; }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--bg2); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 24px; margin-top: 60px; }
+  .project-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    transition: all 0.3s; cursor: pointer;
+  }
+  .project-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.4), var(--glow); border-color: rgba(79,140,255,0.3); }
+  .project-img {
+    width: 100%; aspect-ratio: 16/9; object-fit: cover;
+    background: var(--bg3); display: block;
+    position: relative;
+  }
+  .project-img-placeholder {
+    width: 100%; aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--bg3), var(--bg2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; color: var(--text-muted);
+  }
+  .project-body { padding: 24px; }
+  .project-rating { display: flex; gap: 3px; margin-bottom: 12px; }
+  .star { color: #ffd700; font-size: 14px; }
+  .star.empty { color: var(--border); }
+  .project-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .project-desc { font-size: 14px; color: var(--text-dim); line-height: 1.6; margin-bottom: 16px; }
+  .project-footer { display: flex; justify-content: space-between; align-items: center; }
+  .project-link-preview {
+    font-size: 13px; color: var(--accent); display: flex; align-items: center; gap: 6px;
+    font-weight: 500;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 24px; max-width: 760px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    transform: scale(0.95); transition: transform 0.3s;
+  }
+  .modal-overlay.open .modal { transform: scale(1); }
+  .modal-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 20px 20px 0 0; }
+  .modal-img-placeholder {
+    width: 100%; aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--bg3), var(--bg));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px; color: var(--text-muted);
+    border-radius: 20px 20px 0 0;
+  }
+  .modal-body { padding: 32px; }
+  .modal-close {
+    float: right; background: var(--card); border: 1px solid var(--border);
+    color: var(--text); width: 36px; height: 36px; border-radius: 8px;
+    cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.1); }
+  .modal-title { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; margin: 16px 0 8px; }
+  .modal-rating { display: flex; gap: 4px; margin-bottom: 20px; }
+  .modal-star { color: #ffd700; font-size: 20px; }
+  .modal-desc { color: var(--text-dim); line-height: 1.8; margin-bottom: 24px; }
+  .modal-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; padding: 12px 28px; border-radius: 10px;
+    font-weight: 600; text-decoration: none; font-size: 15px;
+    transition: all 0.2s; box-shadow: 0 8px 24px rgba(79,140,255,0.3);
+  }
+  .modal-link:hover { transform: translateY(-2px); }
+
+  /* ── BOOKING ── */
+  #booking { background: var(--bg); }
+  .booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; margin-top: 60px; }
+  .booking-info h3 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 16px; }
+  .booking-info p { color: var(--text-dim); line-height: 1.7; margin-bottom: 24px; }
+  .contact-details { display: flex; flex-direction: column; gap: 16px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--card); border: 1px solid var(--border);
+    padding: 16px 20px; border-radius: 12px;
+  }
+  .contact-icon { font-size: 22px; }
+  .contact-text { font-size: 14px; }
+  .contact-text .label { color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .contact-text a { color: var(--text); text-decoration: none; font-weight: 500; }
+  .contact-text a:hover { color: var(--accent); }
+
+  /* ── FORM ── */
+  .form-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 36px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 13px; color: var(--text-dim); margin-bottom: 8px; font-weight: 500; letter-spacing: 0.04em; }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; background: var(--bg3); border: 1px solid var(--border);
+    color: var(--text); padding: 12px 16px; border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: rgba(79,140,255,0.5); box-shadow: 0 0 0 3px rgba(79,140,255,0.1);
+  }
+  .form-group textarea { resize: vertical; min-height: 100px; }
+  .btn-submit {
+    width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #fff; padding: 14px; border-radius: 10px;
+    border: none; font-family: 'DM Sans', sans-serif;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    transition: all 0.2s; box-shadow: 0 8px 24px rgba(79,140,255,0.3);
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(79,140,255,0.4); }
+  .form-success { display: none; text-align: center; padding: 20px; color: var(--accent3); font-weight: 500; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--bg2); }
+  .contact-form-wrap { max-width: 600px; margin: 60px auto 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 60px 40px 40px;
+  }
+  .footer-inner { max-width: 1100px; margin: 0 auto; }
+  .footer-top {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 40px; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 20px;
+  }
+  .footer-logo { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; }
+  .footer-logo span {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .footer-phone {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--text-dim); font-size: 15px;
+  }
+  .footer-phone a { color: var(--accent); text-decoration: none; font-weight: 600; }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 32px; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-text { font-size: 13px; color: var(--text-muted); }
+  #footer-text-content { font-size: 14px; color: var(--text-dim); max-width: 500px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s, transform 0.6s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── TOAST ── */
+  #toast {
+    position: fixed; bottom: 30px; right: 30px; z-index: 2000;
+    background: var(--bg3); border: 1px solid var(--border);
+    padding: 14px 24px; border-radius: 12px; font-size: 14px;
+    opacity: 0; transform: translateY(20px);
+    transition: all 0.3s; pointer-events: none;
+  }
+  #toast.show { opacity: 1; transform: none; }
+  #toast.success { border-color: rgba(0,229,200,0.4); color: var(--accent3); }
+  #toast.error { border-color: rgba(255,80,80,0.4); color: #ff5050; }
+
+  /* ── LOADER ── */
+  #loader {
+    position: fixed; inset: 0; z-index: 9000;
+    background: var(--bg); display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.5s;
+  }
+  #loader.hidden { opacity: 0; pointer-events: none; }
+  .loader-inner { text-align: center; }
+  .loader-ring {
+    width: 60px; height: 60px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%; animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loader-text { font-family: 'Syne', sans-serif; font-size: 14px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ── INPUT WITH ICON ── */
+  .input-with-icon { position: relative; }
+  .input-with-icon .input-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    display: flex; align-items: center; pointer-events: none; z-index: 1;
+  }
+  .input-with-icon input {
+    padding-left: 40px !important;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    nav.menu-open .nav-links {
+      display: flex; flex-direction: column; gap: 20px;
+      position: absolute; top: 100%; left: 0; right: 0;
+      background: var(--bg2); border-bottom: 1px solid var(--border);
+      padding: 24px 20px;
+    }
+    nav.menu-open .nav-cta { display: flex; padding: 0 20px 20px; }
+    section { padding: 60px 16px; }
+    #hero { padding: 100px 16px 60px; }
+    .hero-name { letter-spacing: -1px; }
+    .hero-actions { flex-direction: column; align-items: center; gap: 12px; }
+    .hero-actions a { width: 100%; max-width: 300px; text-align: center; justify-content: center; }
+    .about-grid, .booking-grid { grid-template-columns: 1fr; gap: 40px; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-card { padding: 24px 16px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .footer-top { flex-direction: column; align-items: flex-start; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+    footer { padding: 40px 16px 30px; }
+    .countdown-timer { gap: 10px; }
+    .time-val { font-size: 26px; }
+    .modal { border-radius: 16px; }
+    .modal-body { padding: 20px 16px; }
+    .section-title { letter-spacing: -1px; }
+    .container { padding: 0; }
+  }
+
+  @media (max-width: 400px) {
+    .hero-badge { font-size: 11px; padding: 5px 12px; }
+    .about-stats { grid-template-columns: 1fr; }
+    .stat-card { padding: 16px; }
+    .form-card { padding: 20px 14px; }
+    .countdown-timer { gap: 6px; }
+    .time-val { font-size: 22px; }
+    .time-lbl { font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-ring"></div>
+    <div class="loader-text">Loading</div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div id="ticker-bar">
+  <div class="ticker-inner" id="ticker-content">
+    <span id="ticker-text">🚀 Available for new projects — Let's build something amazing!</span>
+    <span id="ticker-text-dup">🚀 Available for new projects — Let's build something amazing!</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">AA.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="tel:+923060406003" class="btn-call">📞 +92 306 0406003</a>
+  </div>
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      <span>Available for new projects</span>
+    </div>
+    <h1 class="hero-name">
+      <span class="line1">Afrasiab</span>
+      <span class="line2">Asghar</span>
+    </h1>
+    <p class="hero-title" id="hero-title">Web Developer & Digital Solutions Expert</p>
+    <p class="hero-tagline" id="hero-tagline">Building premium websites, SaaS applications & POS systems that drive real results. Based in Pakistan, serving clients worldwide.</p>
+    <div class="hero-actions">
+      <a href="#booking" class="btn-primary">Hire Me →</a>
+      <a href="#projects" class="btn-secondary">View Work</a>
+      <a href="https://wa.me/923060406003" target="_blank" class="btn-whatsapp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+    <!-- COUNTDOWN -->
+    <div id="countdown-section">
+      <div class="countdown-label">⚡ Limited Time Offer</div>
+      <div class="countdown-offer" id="offer-text">Special discount on all web projects!</div>
+      <div class="countdown-timer">
+        <div class="time-unit"><span class="time-val" id="cd-days">00</span><span class="time-lbl">Days</span></div>
+        <div class="time-unit"><span class="time-val" id="cd-hours">00</span><span class="time-lbl">Hours</span></div>
+        <div class="time-unit"><span class="time-val" id="cd-mins">00</span><span class="time-lbl">Mins</span></div>
+        <div class="time-unit"><span class="time-val" id="cd-secs">00</span><span class="time-lbl">Secs</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-image-wrap">
+        <div id="about-img-wrap">
+          <div class="about-image-placeholder">👤</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <span class="section-tag reveal">About Me</span>
+        <h2 class="section-title reveal">Crafting Digital<br>Experiences</h2>
+        <p class="section-desc reveal" id="about-text-content">
+          I'm Afrasiab Asghar, a passionate digital solutions expert from Pakistan. I specialize in building high-performance websites, robust SaaS platforms, and point-of-sale systems tailored for global audiences. With a deep focus on SEO and YouTube automation, I help businesses grow their online presence effectively.
+        </p>
+        <div class="about-stats reveal">
+          <div class="stat-card"><span class="stat-val" id="stat1-val">50+</span><div class="stat-label" id="stat1-lbl">Projects Completed</div></div>
+          <div class="stat-card"><span class="stat-val" id="stat2-val">5+</span><div class="stat-label" id="stat2-lbl">Years Experience</div></div>
+          <div class="stat-card"><span class="stat-val" id="stat3-val">30+</span><div class="stat-label" id="stat3-lbl">Happy Clients</div></div>
+          <div class="stat-card"><span class="stat-val" id="stat4-val">10+</span><div class="stat-label" id="stat4-lbl">Awards Won</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <span class="section-tag reveal">What I Do</span>
+    <h2 class="section-title reveal">My Services</h2>
+    <p class="section-desc reveal">Comprehensive digital solutions tailored to your business needs.</p>
+    <div class="services-grid" id="services-list">
+      <!-- Dynamic from Firebase or fallback -->
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <span class="section-tag reveal">Portfolio</span>
+    <h2 class="section-title reveal">Featured Work</h2>
+    <p class="section-desc reveal">A selection of my best projects, built with precision and purpose.</p>
+    <div class="projects-grid" id="projects-grid">
+      <!-- Dynamic -->
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="container">
+    <div class="booking-grid">
+      <div class="booking-info">
+        <span class="section-tag reveal">Get In Touch</span>
+        <h2 class="section-title reveal">Book an<br>Appointment</h2>
+        <p class="section-desc reveal">Ready to start a project? Let's discuss your vision and turn it into reality.</p>
+        <div class="contact-details reveal">
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <div class="contact-text">
+              <div class="label">Phone / WhatsApp</div>
+              <a href="tel:+923060406003" id="contact-phone">+92 306 0406003</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">💬</span>
+            <div class="contact-text">
+              <div class="label">WhatsApp Direct</div>
+              <a href="https://wa.me/923060406003" target="_blank">Message on WhatsApp →</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <div class="contact-text">
+              <div class="label">Location</div>
+              <span>Pakistan — Available Worldwide</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-card reveal">
+        <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:700;margin-bottom:24px;">Book Your Appointment</h3>
+        <div class="form-row">
+          <div class="form-group"><label>Full Name</label><input type="text" id="book-name" placeholder="Your name"></div>
+          <div class="form-group"><label>Email</label><input type="email" id="book-email" placeholder="your@email.com"></div>
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number</label>
+          <div class="input-with-icon">
+            <span class="input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </span>
+            <input type="tel" id="book-whatsapp" placeholder="+92 300 0000000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Date</label><input type="date" id="book-date"></div>
+          <div class="form-group"><label>Time</label><input type="time" id="book-time"></div>
+        </div>
+        <div class="form-group"><label>Message</label><textarea id="book-message" placeholder="Tell me about your project…"></textarea></div>
+        <button class="btn-submit" onclick="submitBooking()">Book Appointment →</button>
+        <div class="form-success" id="book-success">✅ Booking confirmed! I'll contact you soon.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="section-tag reveal" style="justify-content:center;">Contact</span>
+      <h2 class="section-title reveal">Send a Message</h2>
+      <p class="section-desc reveal" style="margin: 0 auto;">Have a question or want to discuss a project? I'm just a message away.</p>
+    </div>
+    <div class="contact-form-wrap">
+      <div class="form-card reveal">
+        <div class="form-row">
+          <div class="form-group"><label>Name</label><input type="text" id="msg-name" placeholder="Your name"></div>
+          <div class="form-group"><label>Email</label><input type="email" id="msg-email" placeholder="your@email.com"></div>
+        </div>
+        <div class="form-group"><label>Subject</label><input type="text" id="msg-subject" placeholder="How can I help?"></div>
+        <div class="form-group"><label>Message</label><textarea id="msg-body" rows="5" placeholder="Write your message…"></textarea></div>
+        <button class="btn-submit" onclick="submitMessage()">Send Message →</button>
+        <div class="form-success" id="msg-success">✅ Message sent! I'll reply within 24 hours.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Afrasiab <span>Asghar.</span></div>
+        <p id="footer-text-content" style="margin-top:12px;font-size:14px;color:var(--text-muted);">Building premium digital solutions from Pakistan to the world.</p>
+      </div>
+      <div class="footer-phone">
+        <span>📞</span>
+        <div>
+          <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">CALL / WHATSAPP</div>
+          <a href="tel:+923060406003" id="footer-phone-num">+92 306 0406003</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-text">© 2025 Afrasiab Asghar. All rights reserved.</span>
+      <span class="footer-text">Made with ♥ in Pakistan</span>
+    </div>
+  </div>
+</footer>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="project-modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div id="modal-img-wrap"></div>
+    <div class="modal-body">
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+      <div class="modal-rating" id="modal-rating"></div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <p class="modal-desc" id="modal-desc"></p>
+      <a href="#" class="modal-link" id="modal-link" target="_blank">View Live Project →</a>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAsrBpXj-JF88A9vCUJp2HuK8F-3xzkgSg",
+  authDomain: "darson-trade.firebaseapp.com",
+  databaseURL: "https://darson-trade-default-rtdb.firebaseio.com",
+  projectId: "darson-trade",
+  storageBucket: "darson-trade.firebasestorage.app",
+  messagingSenderId: "103029860174",
+  appId: "1:103029860174:web:44f93b33fe22bc4321a01f"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// ── HELPERS ──
+function stars(n, size='14px') {
+  let s = '';
+  for (let i = 1; i <= 5; i++) s += `<span class="star${i > n ? ' empty' : ''}" style="font-size:${size}">★</span>`;
+  return s;
+}
+
+function showToast(msg, type='success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `show ${type}`;
+  setTimeout(() => t.className = '', 3200);
+}
+
+// ── LOADER ──
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 700);
+});
+
+// ── NAV SCROLL ──
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── HAMBURGER ──
+window.toggleMenu = () => document.getElementById('navbar').classList.toggle('menu-open');
+
+// ── REVEAL ON SCROLL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── DEFAULT SERVICES ──
+const defaultServices = [
+  { icon:'🌐', name:'Website Development', desc:'Premium, high-performance websites tailored to your brand — from landing pages to complex web apps.' },
+  { icon:'☁️', name:'SaaS Applications', desc:'Scalable software-as-a-service platforms built with modern architecture and seamless user experience.' },
+  { icon:'🏪', name:'POS Software Systems', desc:'Custom point-of-sale systems that streamline your business operations and boost efficiency.' },
+  { icon:'🔍', name:'Search Engine Optimization', desc:'Data-driven SEO strategies that increase your organic visibility and drive qualified traffic.' },
+  { icon:'▶️', name:'YouTube Automation', desc:'End-to-end YouTube channel automation and SEO optimization for maximum reach and growth.' },
+  { icon:'🎨', name:'UI/UX Design', desc:'Beautiful, intuitive interfaces designed with user psychology and conversion optimization in mind.' },
+];
+
+function renderServices(data) {
+  const list = document.getElementById('services-list');
+  list.innerHTML = '';
+  const items = data || defaultServices;
+  items.forEach(s => {
+    list.innerHTML += `
+      <div class="service-card reveal">
+        <div class="service-icon">${s.icon || '⚡'}</div>
+        <div class="service-name">${s.name}</div>
+        <div class="service-desc">${s.desc}</div>
+      </div>`;
+  });
+  list.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// ── DEFAULT PROJECTS ──
+const defaultProjects = [
+  { title:'E-Commerce Platform', shortDesc:'Full-featured online store with payment integration and inventory management.', fullDesc:'Built a complete e-commerce solution with React frontend, Firebase backend, Stripe payments, and real-time inventory tracking. Optimized for performance and SEO.', rating:5, link:'#', image:'' },
+  { title:'SaaS Dashboard', shortDesc:'Multi-tenant analytics dashboard with real-time data visualization.', fullDesc:'Developed a scalable SaaS platform serving 500+ businesses. Includes role-based access control, advanced reporting, and API integrations.', rating:5, link:'#', image:'' },
+  { title:'POS System', shortDesc:'Complete point-of-sale solution for retail businesses.', fullDesc:'Custom POS software with inventory management, sales reporting, customer loyalty programs, and multi-location support.', rating:4, link:'#', image:'' },
+];
+
+function renderProjects(data) {
+  const grid = document.getElementById('projects-grid');
+  grid.innerHTML = '';
+  const items = data || defaultProjects;
+  Object.entries(items).forEach(([key, p]) => {
+    const card = document.createElement('div');
+    card.className = 'project-card reveal';
+    const imgHtml = p.image
+      ? `<img class="project-img" src="${p.image}" alt="${p.title}" loading="lazy">`
+      : `<div class="project-img-placeholder">🖥️</div>`;
+    card.innerHTML = `
+      ${imgHtml}
+      <div class="project-body">
+        <div class="project-rating">${stars(p.rating || 0)}</div>
+        <div class="project-title">${p.title}</div>
+        <div class="project-desc">${p.shortDesc}</div>
+        <div class="project-footer">
+          <span class="project-link-preview">View Details →</span>
+          ${p.link && p.link !== '#' ? `<span style="font-size:12px;color:var(--text-muted);">Live ↗</span>` : ''}
+        </div>
+      </div>`;
+    card.onclick = () => openModal(p);
+    grid.appendChild(card);
+    observer.observe(card);
+  });
+}
+
+// ── MODAL ──
+window.openModal = (p) => {
+  const m = document.getElementById('project-modal');
+  document.getElementById('modal-title').textContent = p.title;
+  document.getElementById('modal-desc').textContent = p.fullDesc || p.shortDesc;
+  document.getElementById('modal-rating').innerHTML = stars(p.rating || 0, '20px');
+  const link = document.getElementById('modal-link');
+  if (p.link && p.link !== '#') { link.href = p.link; link.style.display = 'inline-flex'; }
+  else link.style.display = 'none';
+  const imgWrap = document.getElementById('modal-img-wrap');
+  imgWrap.innerHTML = p.image
+    ? `<img class="modal-img" src="${p.image}" alt="${p.title}">`
+    : `<div class="modal-img-placeholder">🖥️</div>`;
+  m.classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+window.closeModal = (e) => { if (e.target === document.getElementById('project-modal')) closeModalBtn(); };
+window.closeModalBtn = () => {
+  document.getElementById('project-modal').classList.remove('open');
+  document.body.style.overflow = '';
+};
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalBtn(); });
+
+// ── FIREBASE LISTENERS ──
+// Settings
+onValue(ref(db, 'settings'), snap => {
+  const d = snap.val() || {};
+  if (d.contactPhone) {
+    document.querySelectorAll('[id="contact-phone"]').forEach(el => { el.textContent = d.contactPhone; el.href = 'tel:' + d.contactPhone.replace(/\s/g,''); });
+    document.getElementById('footer-phone-num').textContent = d.contactPhone;
+    document.querySelector('.btn-call').innerHTML = `📞 ${d.contactPhone}`;
+  }
+  if (d.footerText) document.getElementById('footer-text-content').textContent = d.footerText;
+  if (d.heroTitle) document.getElementById('hero-title').textContent = d.heroTitle;
+  if (d.heroTagline) document.getElementById('hero-tagline').textContent = d.heroTagline;
+});
+
+// Ticker
+onValue(ref(db, 'ticker'), snap => {
+  const d = snap.val();
+  const bar = document.getElementById('ticker-bar');
+  if (d && d.active && d.text) {
+    document.getElementById('ticker-text').textContent = d.text;
+    document.getElementById('ticker-text-dup').textContent = d.text;
+    bar.classList.add('active');
+  } else bar.classList.remove('active');
+});
+
+// Countdown
+let countdownInterval;
+onValue(ref(db, 'countdown'), snap => {
+  const d = snap.val();
+  const sec = document.getElementById('countdown-section');
+  if (d && d.active && d.endDate) {
+    if (d.offerText) document.getElementById('offer-text').textContent = d.offerText;
+    sec.classList.add('active');
+    clearInterval(countdownInterval);
+    countdownInterval = setInterval(() => {
+      const diff = new Date(d.endDate) - Date.now();
+      if (diff <= 0) { sec.classList.remove('active'); clearInterval(countdownInterval); return; }
+      const dy = Math.floor(diff/86400000), hr = Math.floor((diff%86400000)/3600000);
+      const mn = Math.floor((diff%3600000)/60000), sc = Math.floor((diff%60000)/1000);
+      document.getElementById('cd-days').textContent = String(dy).padStart(2,'0');
+      document.getElementById('cd-hours').textContent = String(hr).padStart(2,'0');
+      document.getElementById('cd-mins').textContent = String(mn).padStart(2,'0');
+      document.getElementById('cd-secs').textContent = String(sc).padStart(2,'0');
+    }, 1000);
+  } else sec.classList.remove('active');
+});
+
+// About
+onValue(ref(db, 'about'), snap => {
+  const d = snap.val();
+  if (!d) return;
+  if (d.text) document.getElementById('about-text-content').textContent = d.text;
+  if (d.image) {
+    document.getElementById('about-img-wrap').innerHTML = `<img src="${d.image}" alt="Afrasiab Asghar" style="width:100%;border-radius:18px;object-fit:cover;aspect-ratio:4/5;">`;
+  }
+  if (d.stat1Val) document.getElementById('stat1-val').textContent = d.stat1Val;
+  if (d.stat1Lbl) document.getElementById('stat1-lbl').textContent = d.stat1Lbl;
+  if (d.stat2Val) document.getElementById('stat2-val').textContent = d.stat2Val;
+  if (d.stat2Lbl) document.getElementById('stat2-lbl').textContent = d.stat2Lbl;
+  if (d.stat3Val) document.getElementById('stat3-val').textContent = d.stat3Val;
+  if (d.stat3Lbl) document.getElementById('stat3-lbl').textContent = d.stat3Lbl;
+  if (d.stat4Val) document.getElementById('stat4-val').textContent = d.stat4Val;
+  if (d.stat4Lbl) document.getElementById('stat4-lbl').textContent = d.stat4Lbl;
+});
+
+// Services
+onValue(ref(db, 'services'), snap => {
+  const d = snap.val();
+  renderServices(d ? Object.values(d) : null);
+});
+
+// Projects
+onValue(ref(db, 'projects'), snap => {
+  const d = snap.val();
+  renderProjects(d || null);
+});
+
+// ── BOOKING SUBMIT ──
+window.submitBooking = async () => {
+  const name = document.getElementById('book-name').value.trim();
+  const email = document.getElementById('book-email').value.trim();
+  const whatsapp = document.getElementById('book-whatsapp').value.trim();
+  const date = document.getElementById('book-date').value;
+  const time = document.getElementById('book-time').value;
+  const message = document.getElementById('book-message').value.trim();
+  if (!name || !email || !date) { showToast('Please fill all required fields.', 'error'); return; }
+  try {
+    await push(ref(db, 'bookings'), { name, email, whatsapp, date, time, message, ts: Date.now() });
+    document.getElementById('book-success').style.display = 'block';
+    showToast('Booking confirmed! ✅');
+    ['book-name','book-email','book-whatsapp','book-date','book-time','book-message'].forEach(id => document.getElementById(id).value = '');
+  } catch(e) { showToast('Error saving booking. Try again.', 'error'); }
+};
+
+// ── MESSAGE SUBMIT ──
+window.submitMessage = async () => {
+  const name = document.getElementById('msg-name').value.trim();
+  const email = document.getElementById('msg-email').value.trim();
+  const subject = document.getElementById('msg-subject').value.trim();
+  const body = document.getElementById('msg-body').value.trim();
+  if (!name || !email || !body) { showToast('Please fill all required fields.', 'error'); return; }
+  try {
+    await push(ref(db, 'messages'), { name, email, subject, body, ts: Date.now() });
+    document.getElementById('msg-success').style.display = 'block';
+    showToast('Message sent! ✅');
+    ['msg-name','msg-email','msg-subject','msg-body'].forEach(id => document.getElementById(id).value = '');
+  } catch(e) { showToast('Error sending message. Try again.', 'error'); }
+};
+
+// Initial render if Firebase empty
+renderServices(null);
+renderProjects(null);
+</script>
+</body>
+</html>
